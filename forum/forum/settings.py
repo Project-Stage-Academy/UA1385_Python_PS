@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-4^3!j#&q)gtg0ouu&&xczb!9=y4&3yden*)ee5jmwdtk$ko6bs"
+SECRET_KEY = "django-insecure--fa8pttjjjbhp!1a*igo+)ym#&lfb+qzv@#u@k&xw^e@*14c^+"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -80,16 +81,6 @@ DATABASES = {
     }
 }
 
-#DATABASES = {
-#   'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'your_db_name',
-#        'USER': 'your_db_user',
-#        'PASSWORD': 'your_db_password',
-#        'HOST': 'localhost',
-#        'PORT': '5432',
-#    }
-#}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
