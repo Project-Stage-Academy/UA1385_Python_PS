@@ -9,26 +9,22 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    command: >
-      sh -c "cd forum &&
-             python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
-    environment:
-      - DEBUG=1
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_HOST=db
-      - DB_PORT=5432
+    command: sh /app/entrypoint.sh
+    env_file:
+      - .env
 
   db:
     image: postgres:15
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      retries: 5
 
 volumes:
   postgres_data:
