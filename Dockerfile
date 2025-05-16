@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY /forum/requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY entrypoint.sh /app/entrypoint.sh
