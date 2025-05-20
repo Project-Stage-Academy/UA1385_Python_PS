@@ -161,3 +161,6 @@ cython_debug/
 
 # static files
 staticfiles/
+
+# logs
+logs/
