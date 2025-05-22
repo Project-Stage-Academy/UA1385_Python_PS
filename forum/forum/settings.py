@@ -129,3 +129,86 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
+
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+os.makedirs(LOG_DIR, exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} [{levelname}] {name} → {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'project.log'),
+            'when': 'midnight',
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+        'file_users': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'users.log'),
+            'formatter': 'verbose',
+        },
+        'file_communications': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'communications.log'),
+            'formatter': 'verbose',
+        },
+        'file_dashboard': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'dashboard.log'),
+            'formatter': 'verbose',
+        },
+        'file_profiles': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'profiles.log'),
+            'formatter': 'verbose',
+        },
+        'file_projects': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'projects.log'),
+            'formatter': 'verbose',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+        },
+        'django.db.backends': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'users': {'handlers': ['console', 'file_users'], 'level': 'DEBUG'},
+        'profiles': {'handlers': ['console', 'file_profiles'], 'level': 'DEBUG'},
+        'projects': {'handlers': ['console', 'file_projects'], 'level': 'DEBUG'},
+        'communications': {'handlers': ['console', 'file_communications'], 'level': 'DEBUG'},
+        'dashboard': {'handlers': ['console', 'file_dashboard'], 'level': 'DEBUG'},
+    },
+    'root': {
+            'handlers': ['console', 'file'],
+            'level': 'WARNING',
+    },
+}
