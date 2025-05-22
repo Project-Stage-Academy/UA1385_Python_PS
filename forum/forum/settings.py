@@ -131,8 +131,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
+os.makedirs(LOG_DIR, exist_ok=True)
 
 LOGGING = {
     'version': 1,
@@ -161,6 +160,36 @@ LOGGING = {
             'backupCount': 7,
             'formatter': 'verbose',
         },
+        'file_users': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'users.log'),
+            'formatter': 'verbose',
+        },
+        'file_communications': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'communications.log'),
+            'formatter': 'verbose',
+        },
+        'file_dashboard': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'dashboard.log'),
+            'formatter': 'verbose',
+        },
+        'file_profiles': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'profiles.log'),
+            'formatter': 'verbose',
+        },
+        'file_projects': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'projects.log'),
+            'formatter': 'verbose',
+        }
     },
     'loggers': {
         'django': {
@@ -172,10 +201,14 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'users': {'handlers': ['console', 'file'], 'level': 'DEBUG'},
-        'profiles': {'handlers': ['console', 'file'], 'level': 'DEBUG'},
-        'projects': {'handlers': ['console', 'file'], 'level': 'DEBUG'},
-        'communications': {'handlers': ['console', 'file'], 'level': 'DEBUG'},
-        'dashboard': {'handlers': ['console', 'file'], 'level': 'DEBUG'},
+        'users': {'handlers': ['console', 'file_users'], 'level': 'DEBUG'},
+        'profiles': {'handlers': ['console', 'file_profiles'], 'level': 'DEBUG'},
+        'projects': {'handlers': ['console', 'file_projects'], 'level': 'DEBUG'},
+        'communications': {'handlers': ['console', 'file_communications'], 'level': 'DEBUG'},
+        'dashboard': {'handlers': ['console', 'file_dashboard'], 'level': 'DEBUG'},
+    },
+    'root': {
+            'handlers': ['console', 'file'],
+            'level': 'WARNING',
     },
 }
