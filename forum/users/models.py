@@ -51,10 +51,10 @@ class Investor(models.Model):
     )
     company_name = models.CharField(max_length=255)
     industry = models.CharField(max_length=255, blank=True, null=True)
-    required_funding = models.IntegerField()
     created_at = models.DateField(auto_now_add=True)
     address = models.CharField(max_length=255)
-    website = models.CharField(max_length=255)
+    website = models.URLField(blank=True, null=True)
+
 
     class Meta:
         verbose_name = 'investor'
