@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import ExampleView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from .views import RegisterView
 
 urlpatterns = [
-    #TODO : replace this exeample path with actual paths
-    path("logtest/", ExampleView.as_view(), name="logtest"),
+    path('register/', RegisterView.as_view(), name='register'),
 ]
