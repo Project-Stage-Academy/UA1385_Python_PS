@@ -10,10 +10,8 @@ class Project(models.Model):
         db_column='startup_id'
     )
     
-    investor = models.ForeignKey(
-        Investor,
-        on_delete=models.CASCADE,
-        db_column='investor_id'
+    investor = models.ManyToManyField(
+        Investor
     )
     
     title = models.CharField(max_length=255)
