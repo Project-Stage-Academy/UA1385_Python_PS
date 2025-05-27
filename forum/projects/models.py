@@ -1,5 +1,6 @@
 from django.db import models
-from users.models import Investor, Startup
+from startups.models import Startup
+from investors.models import Investor
 
 class Project(models.Model):
     project_id = models.AutoField(primary_key=True)
