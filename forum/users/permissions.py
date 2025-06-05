@@ -11,3 +11,11 @@ logger = logging.getLogger(__name__)
 #             logger.warning(f"Permission denied for user {request.user}")
 #             return False
 #         return True
+
+class IsInvestor(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.role == 1
+
+class IsStartup(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.role == 2
