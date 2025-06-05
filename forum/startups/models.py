@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import User
 
-class Startup(models.Model):
+class StartupProfile(models.Model):
     startup_id = models.AutoField(primary_key=True)
     user_id = models.OneToOneField(
         User,
