@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import User
 
-class Investor(models.Model):
+class InvestorProfile(models.Model):
     investor_id = models.AutoField(primary_key=True)  
     user_id = models.OneToOneField(
         User,
