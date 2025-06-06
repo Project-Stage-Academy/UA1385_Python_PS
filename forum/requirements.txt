@@ -9,3 +9,5 @@ pylint-plugin-utils==0.8.2
 django-phonenumber-field==8.0.0
 phonenumberslite==9.0.0
 djangorestframework-simplejwt==5.3.1
+channels==4.0.0
+daphne==4.0.0
