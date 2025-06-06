@@ -4,14 +4,18 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 class Consumer(AsyncWebsocketConsumer):
     async def connect(self):
-        await self.accept()
-        await self.send(text_data="Websocket connected.")
+        user = self.scope["user"]
+        if user.is_authenticated:
+            await self.accept()
+            await self.send(text_data="WebSocket connected.")
+        else:
+            await self.close()
 
     async def receive(self, text_data):
         await self.send(text_data=f"You sent: {text_data}")
 
     async def disconnect(self, code):
-        pass
+        print(f"WebSocket disconnected with code: {code}")
 
 websocket_urlpatterns =[
     path("ws/test/", Consumer.as_asgi()),
