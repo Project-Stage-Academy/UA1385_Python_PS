@@ -27,3 +27,14 @@ class UserRegistrationTest(APITestCase):
         self.assertEqual(user.user_name, self.payload["user_name"])
         self.assertEqual(user.first_name, self.payload["first_name"])
         self.assertTrue(user.check_password(self.payload["password"]))
+    
+    def test_register_existing_email_should_fail(self):
+        self.client.post(self.url, self.payload, format="json")
+        response = self.client.post(self.url, self.payload, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    
+    def test_registration_without_password_should_fail(self):
+        data = self.payload.copy()
+        data.pop("password")
+        response = self.client.post(self.url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
