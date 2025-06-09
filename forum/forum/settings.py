@@ -151,7 +151,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
-    'AUTH_HEADER_TYPES': ('Bearer'),
+    'AUTH_HEADER_TYPES': ('Bearer', ),
     'SIGNING_KEY': SECRET_KEY,
     'USER_ID_FIELD': 'user_id',
     'USER_ID_CLAIM': 'user_id',
