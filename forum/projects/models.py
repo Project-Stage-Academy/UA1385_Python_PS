@@ -25,3 +25,9 @@ class Project(models.Model):
         verbose_name = 'project'
         verbose_name_plural = 'projects'
         db_table = 'projects'
+
+        indexes = [
+            models.Index(fields=['startup']),
+            models.Index(fields=['progress']),
+            models.Index(fields=['investor']),
+        ]

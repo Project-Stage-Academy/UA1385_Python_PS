@@ -6,9 +6,9 @@ class StartupProfileSerializer(serializers.ModelSerializer):
         model = StartupProfile
         fields = '__all__'
     
-    def validate_company_name(self, value):
+    def validate_startup_title(self, value):
         if not value.strip():
-            raise serializers.ValidationError("Company name cannot be empty.")
+            raise serializers.ValidationError("Startup title cannot be empty.")
         return value
 
     def validate_description(self, value):
