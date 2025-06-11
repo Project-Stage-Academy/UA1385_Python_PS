@@ -12,7 +12,8 @@ class Project(models.Model):
     )
     
     investor = models.ManyToManyField(
-        InvestorProfile
+        InvestorProfile,
+        through='ProjectInvestor'
     )
     
     title = models.CharField(max_length=255)
@@ -28,6 +29,15 @@ class Project(models.Model):
 
         indexes = [
             models.Index(fields=['startup']),
-            models.Index(fields=['progress']),
+            models.Index(fields=['progress'])
+        ]
+
+class ProjectInvestor(models.Model):
+    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    investor = models.ForeignKey('investors.InvestorProfile', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'project_investors'
+        indexes = [
             models.Index(fields=['investor']),
         ]
