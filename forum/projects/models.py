@@ -1,18 +1,18 @@
 from django.db import models
-from startups.models import Startup
-from investors.models import Investor
+from startups.models import StartupProfile
+from investors.models import InvestorProfile
 
 class Project(models.Model):
     project_id = models.AutoField(primary_key=True)
     
     startup = models.ForeignKey(
-        Startup,
+        StartupProfile,
         on_delete=models.CASCADE,
         db_column='startup_id'
     )
     
     investor = models.ManyToManyField(
-        Investor
+        InvestorProfile
     )
     
     title = models.CharField(max_length=255)
@@ -25,3 +25,9 @@ class Project(models.Model):
         verbose_name = 'project'
         verbose_name_plural = 'projects'
         db_table = 'projects'
+
+        indexes = [
+            models.Index(fields=['startup']),
+            models.Index(fields=['progress']),
+            models.Index(fields=['investor']),
+        ]
