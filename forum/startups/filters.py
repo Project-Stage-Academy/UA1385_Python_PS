@@ -10,6 +10,6 @@ class StartupFilter(django_filters.FilterSet):
 
     def filter_investment_needs(self, queryset, name, value):
         if value:
-            return queryset.filter(project__progress=True).distinct()
+            return queryset.filter(projects__progress=True).distinct()
         else:
-            return queryset.exclude(project__progress=True).distinct()
+            return queryset.exclude(projects__progress=True).distinct()
