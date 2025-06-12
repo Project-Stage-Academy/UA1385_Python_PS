@@ -16,16 +16,15 @@ class StartupAPITest(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_can_view_startup_detail(self):
-        # startup = Startup.objects.create(
-        #     user_id=self.investor,
-        #     title="GreenAI",
-        #     description="AI solutions",
-        #     industry="AI",
-        #     company_size=50,
-        #     investment_needs=True,
-        #     website="https://greenai.example.com",
-        #     address="Kyiv, Ukraine"
-        # )
+        startup = Startup.objects.create(
+            user_id=self.investor,
+            title="GreenAI",
+            description="AI solutions",
+            industry="AI",
+            company_size=50,
+            website="https://greenai.example.com",
+            address="Kyiv, Ukraine"
+        )
 
         response = self.client.get(f'/api/startups/{self.startup.startup_id}/')
 
@@ -42,7 +41,6 @@ class StartupAPITest(APITestCase):
             description="Desc A",
             industry="Finance",
             company_size=10,
-            investment_needs=True,
             website="https://startup-a.example.com",
             address="Kyiv"
         )
@@ -53,7 +51,6 @@ class StartupAPITest(APITestCase):
             description="Desc B",
             industry="Health",
             company_size=20,
-            investment_needs=False,
             website="https://startup-b.example.com",
             address="Lviv"
         )
@@ -73,7 +70,6 @@ class StartupAPITest(APITestCase):
             description="AI solutions",
             industry="AI",
             company_size=30,
-            investment_needs=True,
             website="https://ss.example.com",
             address="Kyiv"
         )
@@ -84,7 +80,6 @@ class StartupAPITest(APITestCase):
             description="Maritime technologies",
             industry="Marine",
             company_size=15,
-            investment_needs=False,
             website="https://blueocean.example.com",
             address="Odessa"
         )

@@ -4,11 +4,12 @@ from investors.models import Investor
 
 class Project(models.Model):
     project_id = models.AutoField(primary_key=True)
-    
+
     startup = models.ForeignKey(
         Startup,
         on_delete=models.CASCADE,
-        db_column='startup_id'
+        db_column='startup_id',
+        related_name = 'projects'
     )
     
     investor = models.ManyToManyField(
