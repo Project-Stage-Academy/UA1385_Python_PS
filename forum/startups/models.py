@@ -30,6 +30,8 @@ class Subscription(models.Model):
     
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.investor.email} -> {self.startup.title}'
 
     class Meta:
         unique_together = ('investor', 'startup')

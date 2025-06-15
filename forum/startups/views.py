@@ -17,6 +17,8 @@ class StartupProfileViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
     def subscribe(self, request, pk=None):
+        if request.user.role != 1:  # 1 — Investor
+            return Response({"error": "Only investors can subscribe"}, status=403)
         startup = self.get_object()
         subscription, created = Subscription.objects.get_or_create(
             investor=request.user,
