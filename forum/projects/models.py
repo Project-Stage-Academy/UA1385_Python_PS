@@ -29,5 +29,4 @@ class Project(models.Model):
         indexes = [
             models.Index(fields=['startup']),
             models.Index(fields=['progress']),
-            models.Index(fields=['investor']),
         ]
