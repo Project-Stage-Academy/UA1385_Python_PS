@@ -37,18 +37,26 @@ URLRouter : works as "urls.py" for websockets
 """
 
 import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "forum.settings")
 
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
+from communications.middleware import JwtAuthMiddleware
 try:
     from forum.routing import websocket_urlpatterns
 except ImportError:
     websocket_urlpatterns = []
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "forum.settings")
 
 application = ProtocolTypeRouter({
+
     "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
+
+    "websocket": JwtAuthMiddleware(
+        AuthMiddlewareStack(
+            URLRouter(websocket_urlpatterns)
+        )
+    ),
+
 })
