@@ -4,6 +4,7 @@ from .models import StartupProfile, Subscription
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .serializers import StartupProfileSerializer
+from users.permissions import IsStartupRole, IsInvestorRole
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
 
@@ -15,10 +16,15 @@ class StartupProfileViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'industry', 'description', 'address']
     ordering_fields = ['title', 'industry']
     
-    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    def get_permissions(self):
+        # Startup Only
+        startup_only_actions = ['create', 'update', 'partial_update', 'destroy']
+        if self.action in startup_only_actions:
+            return [IsAuthenticated(), IsStartupRole()]
+        return super().get_permissions()
+    
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated, IsInvestorRole])
     def subscribe(self, request, pk=None):
-        if request.user.role != 1:  # 1 — Investor
-            return Response({"error": "Only investors can subscribe"}, status=403)
         startup = self.get_object()
         subscription, created = Subscription.objects.get_or_create(
             investor=request.user,
@@ -28,7 +34,7 @@ class StartupProfileViewSet(viewsets.ModelViewSet):
             return Response({"status": "subscribed"}, status=201)
         return Response({"status": "already subscribed"}, status=200)
 
-    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated, IsInvestorRole])
     def unsubscribe(self, request, pk=None):
         startup = self.get_object()
         subscription = Subscription.objects.filter(

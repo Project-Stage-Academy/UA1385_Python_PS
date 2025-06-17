@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -24,12 +25,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    role = models.PositiveSmallIntegerField(
-        choices=[
-            (1, "Investor"),
-            (2, "Startup"),
-        ],
-        default=1,
+
+    ROLES = [
+        (1, "Investor"),
+        (2, "Startup"),
+    ]
+    roles = ArrayField(
+        models.PositiveSmallIntegerField(choices=ROLES),
+        default=list,
+        blank=True,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
