@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from .models import User
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -32,3 +33,22 @@ class UserResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'user_name']
+
+
+
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    default_error_messages = {
+        "bad_token": "Incorrect or already revoked token."
+    }
+
+    def validate(self, attrs):
+        self.token = attrs["refresh"]
+        return attrs
+
+    def save(self, **kwargs):
+        try:
+            RefreshToken(self.token).blacklist()
+        except TokenError:
+            self.fail("bad_token")
