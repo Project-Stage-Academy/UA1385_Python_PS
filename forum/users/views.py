@@ -1,12 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
+
+from .models import User
 from .serializers import UserRegisterSerializer
 import logging
 
 logger = logging.getLogger(__name__)
 
-class RegisterView(APIView):
+class RegisterView(generics.CreateAPIView):
     def post(self, request):
         logger.info("Received registration request")
 

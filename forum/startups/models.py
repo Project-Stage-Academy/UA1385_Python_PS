@@ -8,13 +8,18 @@ class Startup(models.Model):
         on_delete=models.CASCADE,
         db_column='user_id'
     )
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+    title = models.CharField(max_length=255,  blank=True)
+    description = models.TextField(blank=True)
     industry = models.CharField(max_length=255, blank=True, null=True)
-    website = models.CharField(max_length=255, blank=True, null=True)
+    company_size = models.PositiveIntegerField(blank=True, null=True)
+    website = models.URLField(max_length=255, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name = 'startup'
         verbose_name_plural = 'startups'
         db_table = 'startups'
+
+    @property
+    def investment_needs(self):
+        return self.projects.filter(progress=True).exists()
