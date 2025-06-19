@@ -3,10 +3,27 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserRegisterSerializer
 import logging
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from drf_spectacular.utils import extend_schema
 
 logger = logging.getLogger(__name__)
 
+@extend_schema(
+    tags=["users"],
+    summary="Login"
+)
+class LoginView(TokenObtainPairView):
+    pass
+
+@extend_schema(tags=["users"])
+class RefreshView(TokenRefreshView):
+    pass
+@extend_schema(
+    tags=["users"],
+    summary="Create a new user"
+)
 class RegisterView(APIView):
+
     def post(self, request):
         logger.info("Received registration request")
 

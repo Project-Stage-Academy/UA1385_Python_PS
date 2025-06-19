@@ -4,6 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import InvestorProfile
 from .serializers import InvestorProfileSerializer
+from drf_spectacular.utils import extend_schema
+
+@extend_schema(
+    tags=["investors"]
+)
 
 class InvestorProfileViewSet(viewsets.ModelViewSet):
     queryset = InvestorProfile.objects.all()
