@@ -1,7 +1,10 @@
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import UserRegisterSerializer
+from .serializers import CustomTokenObtainPairSerializer, UserRegisterSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 import logging
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_spectacular.utils import extend_schema
@@ -12,8 +15,8 @@ logger = logging.getLogger(__name__)
     tags=["users"],
     summary="Login"
 )
-class LoginView(TokenObtainPairView):
-    pass
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 @extend_schema(tags=["users"])
 class RefreshView(TokenRefreshView):
@@ -41,4 +44,3 @@ class RegisterView(APIView):
         
         logger.warning(f"User registration failed. Errors: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
