@@ -11,3 +11,5 @@ phonenumberslite==9.0.0
 djangorestframework-simplejwt==5.3.1
 channels==4.0.0
 daphne==4.0.0
+mongoengine>=0.24.0
+dnspython

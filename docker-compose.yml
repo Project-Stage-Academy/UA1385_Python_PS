@@ -37,7 +37,15 @@ services:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
       retries: 5
+  mongo:
+    image: mongo:6.0
+    restart: unless-stopped
+    ports: 
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
 
 volumes:
   postgres_data:
   pgadmin_data:
+  mongo_data:

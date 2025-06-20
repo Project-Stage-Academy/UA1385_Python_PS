@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
 from datetime import timedelta
+from mongoengine import connect
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-key-for-dev-only")
 
@@ -93,6 +94,22 @@ DATABASES = {
         "HOST": os.getenv("DB_HOST", "db"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
+}
+
+MONGO_DB_NAME = os.getenv("MONGO_DB", "forum_chat")
+MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
+MONGO_PORT = int(os.getenv("MONGO_PORT", 27017))
+connect(
+    db=MONGO_DB_NAME,
+    host=MONGO_HOST,
+    port=MONGO_PORT,
+    alias="chat"
+)
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
 }
 
 # Password validation
