@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.response import Response
+
 from .models import StartupProfile
 from .serializers import StartupProfileSerializer
 from rest_framework import filters
@@ -91,6 +93,11 @@ class StartupProfileViewSet(viewsets.ModelViewSet):
         - 401 Unauthorized: Authentication credentials were not provided.
         - 403 Forbidden: Access denied.
         """
+        if request.user.role != 2:
+            return Response(
+                {"detail": "Only users with role=2 can create startup profiles."},
+                status=403
+            )
         return super().create(request, *args, **kwargs)
 
     @extend_schema(
