@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'drf_spectacular',
     'users',
     'profiles',
     'projects',
@@ -145,6 +146,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -239,5 +241,21 @@ LOGGING = {
     'root': {
             'handlers': ['console', 'file'],
             'level': 'WARNING',
+    },
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Project FORUM',
+    'DESCRIPTION': 'API documentation',
+    'VERSION': '1.0.0',
+    'SECURITY': [{'BearerAuth': []}],
+    'COMPONENTS': {
+        'securitySchemes': {
+            'BearerAuth': {
+                'type': 'https',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }
+        }
     },
 }
