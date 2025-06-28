@@ -11,7 +11,7 @@ from .managers import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['user_name']
+    REQUIRED_FIELDS = []
 
     user_id = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True)

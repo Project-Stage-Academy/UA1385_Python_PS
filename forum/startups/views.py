@@ -96,7 +96,7 @@ class StartupProfileViewSet(viewsets.ModelViewSet):
         - 401 Unauthorized: Authentication credentials were not provided.
         - 403 Forbidden: Access denied.
         """
-        if request.user.role != 2:
+        if request.user.roles != 2:
             return Response(
                 {"detail": "Only users with role=2 can create startup profiles."},
                 status=403
